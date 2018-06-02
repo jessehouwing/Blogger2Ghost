@@ -269,10 +269,10 @@ namespace Blogger2Ghost.Commands
 
                     if (newUrl != null)
                     {
-                        aTag.Attributes["href"].Value = newUrl.ToUrl;
+                        aTag.Attributes["href"].Value = "/" + newUrl.ToUrl;
                     }
                 }
-                catch (UriFormatException e)
+                catch (UriFormatException)
                 {
                     Console.WriteLine("Invalid Url : " + aTag.Attributes["href"].Value);
                 }
