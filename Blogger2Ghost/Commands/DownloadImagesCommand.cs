@@ -14,7 +14,7 @@ namespace Blogger2Ghost.Commands
     {
         public DownloadImagesCommand()
         {
-            IsCommand("images");
+            IsCommand("images", "Download images and generate mapping file.");
             HasOption("include-drafts", "Include draft posts", _ => IncludeDrafts = true);
         }
 
@@ -23,6 +23,8 @@ namespace Blogger2Ghost.Commands
             get { return _includeDrafts; }
             set { _includeDrafts = value; }
         }
+
+        private HashSet<string> _downloadedFiles = new HashSet<string>();
 
         public override int Run(string[] remainingArguments)
         {
@@ -74,17 +76,28 @@ namespace Blogger2Ghost.Commands
             return result;
         }
 
-        private static string ToTargetPath(Uri img, string imagesPath)
+        private string ToTargetPath(Uri img, string imagesPath)
         {
             var target = WebUtility.UrlDecode(Path.GetFileName(img.AbsolutePath));
             target = WebUtility.UrlDecode(target);
             target = Regex.Replace(target, "[^a-z0-9.]+", "-", RegexOptions.IgnoreCase);
             target = Path.Combine(imagesPath, target);
             target = Path.GetFullPath(target);
-            if (string.IsNullOrWhiteSpace(Path.GetExtension(target)))
+            if (!Path.HasExtension(target))
             {
                 target += ".png";
             }
+
+            if (_downloadedFiles.Contains(target))
+            {
+                string filename = Path.GetFileNameWithoutExtension(target);
+                string extension = Path.GetExtension(target);
+                string path = Path.GetDirectoryName(target);
+
+                target = Path.Combine(path, $"{filename}_1{extension}");
+            }
+
+            _downloadedFiles.Add(target);
             return target;
         }
 
