@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using ManyConsole;
-using Microsoft.SyndicationFeed;
-using Microsoft.SyndicationFeed.Atom;
 
 namespace Blogger2Ghost
 {
     public static class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
             int result;
 
