@@ -21,7 +21,7 @@ namespace Blogger2Ghost.Commands
 
         public GenerateMappingsCommand()
         {
-            IsCommand("mapping");
+            IsCommand("mapping", "Generate mapping files");
             HasOption("tags", "Generate Tag mapping", _ => GenerateTags = true);
             HasOption("authors", "Generate Author mapping", _ => GenerateAuthors = true);
             HasOption("urls", "Generate Url mapping", _ => GenerateUrls = true);

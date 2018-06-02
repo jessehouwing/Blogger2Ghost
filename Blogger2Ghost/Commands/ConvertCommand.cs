@@ -17,11 +17,11 @@ namespace Blogger2Ghost.Commands
     {
         public ConvertCommand()
         {
-            IsCommand("convert");
+            IsCommand("convert", "Convert blogger export to ghost import");
             HasOption("include-drafts", "Include draft posts", _ => IncludeDrafts = true);
-            HasOption("m|markdown", "", _ => Markdown = true);
-            HasOption("template=", "", t => Template = t);
-            HasOption("z|zip", "", _ => Zip = true);
+            HasOption("m|markdown", "Convert to Markdown", _ => Markdown = true);
+            HasOption("template=", "Use this custom template", t => Template = t);
+            HasOption("z|zip", "Generate zip file", _ => Zip = true);
             HasOption("redirect-permanent", "", _ => RedirectPermanent = true);
         }
 
