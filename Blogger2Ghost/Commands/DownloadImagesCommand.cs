@@ -24,7 +24,7 @@ namespace Blogger2Ghost.Commands
             set { _includeDrafts = value; }
         }
 
-        private HashSet<string> _downloadedFiles = new HashSet<string>();
+        private readonly HashSet<string> _downloadedFiles = new HashSet<string>();
 
         public override int Run(string[] remainingArguments)
         {

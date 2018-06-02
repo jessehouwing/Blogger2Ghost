@@ -11,7 +11,7 @@ using Microsoft.SyndicationFeed.Atom;
 
 namespace Blogger2Ghost
 {
-    class Program
+    public static class Program
     {
         public static async Task Main(string[] args)
         {

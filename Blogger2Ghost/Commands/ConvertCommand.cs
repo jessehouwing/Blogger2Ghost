@@ -39,10 +39,10 @@ namespace Blogger2Ghost.Commands
             set { _includeDrafts = value; }
         }
 
-        UrlMapping[] _urlMappings;
-        ImageMapping[] _imageMappings;
-        UserMapping[] _userMappings;
-        TagMapping[] _tagMappings;
+        private UrlMapping[] _urlMappings;
+        private ImageMapping[] _imageMappings;
+        private UserMapping[] _userMappings;
+        private TagMapping[] _tagMappings;
 
         public override int Run(string[] remainingArguments)
         {
@@ -159,7 +159,7 @@ namespace Blogger2Ghost.Commands
             }
         }
 
-        readonly Dictionary<string, string> _postLookup = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _postLookup = new Dictionary<string, string>();
 
         private void ConvertPosts(IList<Post> posts)
         {
@@ -290,7 +290,7 @@ namespace Blogger2Ghost.Commands
             }
         }
 
-        Dictionary<string, string> _userLookup = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _userLookup = new Dictionary<string, string>();
             
         private void ConvertUser(IList<User> users, UserMapping[] mappings, ISyndicationPerson user)
         {
@@ -309,7 +309,7 @@ namespace Blogger2Ghost.Commands
             users.Add(result);
         }
 
-        private Dictionary<string, string> _tagLookup = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _tagLookup = new Dictionary<string, string>();
 
         private void ConvertTags(IList<Tag> tags)
         {
