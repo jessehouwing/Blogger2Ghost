@@ -1,0 +1,19 @@
+﻿Prepare conversion
+--
+
+* blogger2ghost mapping -i blog-05-29-2018.xml -o . --force --all
+* blogger2ghost images -i blog-05-29-2018.xml -o . --force --include-drafts
+
+Fix any mappings and issues
+--
+
+ * Manually fix
+   * authors.json
+   * urls.json
+   * images.json
+   * tags.json
+
+Generate Ghost import
+--
+
+* blogger2ghost convert -i blog-05-29-2018.xml -o . --force --template blogger --zip --markdown --include-drafts
