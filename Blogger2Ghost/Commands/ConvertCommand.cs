@@ -99,12 +99,13 @@ namespace Blogger2Ghost.Commands
                     }
                 ).ToArray();
 
-            var tagRedirect = _tagMappings.Select(tag =>
-                new Redirect
-                {
-                    From = "/search/label/" + tag.BloggerTag,
-                    To = string.IsNullOrWhiteSpace(tag.Slug) ? "/" : "/tag/" + tag.Slug
-                }
+            var tagRedirect = _tagMappings.SelectMany(tag =>
+                tag.BloggerTag.Select(bTag =>
+                    new Redirect
+                    {
+                        From = "/search/label/" + bTag,
+                        To = string.IsNullOrWhiteSpace(tag.Slug) ? "/" : "/tag/" + tag.Slug
+                    })
             ).ToArray();
 
             WriteFile("redirects", redirects.Concat(tagRedirect));

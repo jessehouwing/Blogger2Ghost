@@ -16,7 +16,7 @@ namespace Blogger2Ghost.Mapping
 
         public TagMapping(string bloggerTag)
         {
-            BloggerTag = bloggerTag;
+            BloggerTag = new List<string> {bloggerTag};
             Aliases = new List<string>();
             ChildTags = new List<TagMapping>();
 
@@ -34,7 +34,7 @@ namespace Blogger2Ghost.Mapping
             }
         }
 
-        public string BloggerTag { get; set; }
+        public IList<string> BloggerTag { get; set; }
         public string Slug { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
