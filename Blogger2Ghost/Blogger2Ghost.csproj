@@ -104,9 +104,6 @@
     <Content Include="blog-05-29-2018.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="blogcontent.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Ghost\DataFormat.txt" />
     <Content Include="sample.txt" />
   </ItemGroup>

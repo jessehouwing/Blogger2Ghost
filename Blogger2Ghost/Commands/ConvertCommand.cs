@@ -98,7 +98,16 @@ namespace Blogger2Ghost.Commands
                         Permanent = RedirectPermanent
                     }
                 ).ToArray();
-            WriteFile("redirects", redirects);
+
+            var tagRedirect = _tagMappings.Select(tag =>
+                new Redirect
+                {
+                    From = "/search/label/" + tag.BloggerTag,
+                    To = string.IsNullOrWhiteSpace(tag.Slug) ? "/" : "/tag/" + tag.Slug
+                }
+            ).ToArray();
+
+            WriteFile("redirects", redirects.Concat(tagRedirect));
         }
 
         private void PackageFiles()
@@ -133,7 +142,7 @@ namespace Blogger2Ghost.Commands
                                        ?? sourcePost.Links.SingleOrDefault(self => IncludeDrafts && string.Equals(self.RelationshipType, "self"))
                         ).Uri.AbsoluteUri;
 
-                    if (_tagLookup[tag] != null)
+                    if (_tagLookup.ContainsKey(tag))
                     {
                         var postTag = new PostTag()
                         {
@@ -312,32 +321,35 @@ namespace Blogger2Ghost.Commands
 
         private void ConvertTags(IList<Tag> tags, TagMapping mapping, Tag parent)
         {
-            Tag tag = new Tag
+            if (!string.IsNullOrWhiteSpace(mapping.Slug))
             {
-                Slug = mapping.Slug,
-                Description = mapping.Description,
-                Name = mapping.Name ?? mapping.Slug,
-                Id = Guid.NewGuid().ToString(),
-                ParentId = parent?.Id
-            };
-
-            _tagLookup.Add(mapping.Slug, tag.Id);
-
-            if (mapping.Aliases != null)
-            {
-                foreach (var alias in mapping.Aliases)
+                Tag tag = new Tag
                 {
-                    _tagLookup.Add(alias, tag.Id);
+                    Slug = mapping.Slug,
+                    Description = mapping.Description,
+                    Name = mapping.Name ?? mapping.Slug,
+                    Id = Guid.NewGuid().ToString(),
+                    ParentId = parent?.Id
+                };
+
+                _tagLookup.Add(mapping.Slug, tag.Id);
+
+                if (mapping.Aliases != null)
+                {
+                    foreach (var alias in mapping.Aliases)
+                    {
+                        _tagLookup.Add(alias, tag.Id);
+                    }
                 }
-            }
 
-            tags.Add(tag);
+                tags.Add(tag);
 
-            if (mapping.ChildTags != null)
-            {
-                foreach (var child in mapping.ChildTags)
+                if (mapping.ChildTags != null)
                 {
-                    ConvertTags(tags, child, tag);
+                    foreach (var child in mapping.ChildTags)
+                    {
+                        ConvertTags(tags, child, tag);
+                    }
                 }
             }
         }
