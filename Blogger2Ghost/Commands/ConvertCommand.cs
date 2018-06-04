@@ -145,13 +145,18 @@ namespace Blogger2Ghost.Commands
 
                     if (_tagLookup.ContainsKey(tag))
                     {
-                        var postTag = new PostTag()
+                        if (!postTags.Any(pt => 
+                            pt.PostId == _postLookup[originalUrl] 
+                            && pt.TagId == _tagLookup[tag]))
                         {
-                            PostId = _postLookup[originalUrl],
-                            TagId = _tagLookup[tag],
-                            SortOrder = _tagMappings.Single(t => t.BloggerTag.Any(bt => bt == tag)).Order
-                        };
-                        postTags.Add(postTag);
+                            var postTag = new PostTag()
+                            {
+                                PostId = _postLookup[originalUrl],
+                                TagId = _tagLookup[tag],
+                                SortOrder = _tagMappings.Single(t => t.BloggerTag.Any(bt => bt == tag)).Order
+                            };
+                            postTags.Add(postTag);
+                        }
                     }
                     else
                     {
