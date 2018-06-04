@@ -148,7 +148,8 @@ namespace Blogger2Ghost.Commands
                         var postTag = new PostTag()
                         {
                             PostId = _postLookup[originalUrl],
-                            TagId = _tagLookup[tag]
+                            TagId = _tagLookup[tag],
+                            SortOrder = _tagMappings.Single(t => t.BloggerTag.Any(bt => bt == tag)).Order
                         };
                         postTags.Add(postTag);
                     }
