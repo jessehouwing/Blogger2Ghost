@@ -99,16 +99,32 @@ namespace Blogger2Ghost.Commands
                     }
                 ).ToArray();
 
-            var tagRedirect = _tagMappings.SelectMany(tag =>
-                tag.BloggerTag.Select(bTag =>
-                    new Redirect
-                    {
-                        From = "/search/label/" + bTag,
-                        To = string.IsNullOrWhiteSpace(tag.Slug) ? "/" : "/tag/" + tag.Slug
-                    })
-            ).ToArray();
-
+            var tagRedirect = _tagMappings.SelectMany(tag => GetRedirectForTagMappingRecursive(tag)).Distinct().ToArray();
+                
             WriteFile("redirects", redirects.Concat(tagRedirect));
+        }
+
+        private IEnumerable<Redirect> GetRedirectForTagMappingRecursive(TagMapping tag)
+        {
+            foreach (string bloggerTag in tag.BloggerTag)
+            {
+                yield return new Redirect
+                {
+                    From = "/search/label/" + bloggerTag,
+                    To = string.IsNullOrWhiteSpace(tag.Slug) ? "/" : "/tag/" + tag.Slug
+                };
+
+                if (tag.ChildTags != null && tag.ChildTags.Any())
+                {
+                    foreach (var childTag in tag.ChildTags)
+                    {
+                        foreach (var redirect in GetRedirectForTagMappingRecursive(childTag))
+                        {
+                            yield return redirect;
+                        }
+                    }
+                }
+            }
         }
 
         private void PackageFiles()
