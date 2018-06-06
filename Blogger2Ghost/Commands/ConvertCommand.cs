@@ -153,7 +153,7 @@ namespace Blogger2Ghost.Commands
                             {
                                 PostId = _postLookup[originalUrl],
                                 TagId = _tagLookup[tag],
-                                SortOrder = _tagMappings.Single(t => t.BloggerTag.Any(bt => bt == tag)).Order
+                                SortOrder = GetSortOrderForTag(tag) ?? 0
                             };
                             postTags.Add(postTag);
                         }
@@ -164,6 +164,36 @@ namespace Blogger2Ghost.Commands
                     }
                 }
             }
+        }
+
+        private int? GetSortOrderForTag(string bloggerTag, IEnumerable<TagMapping> tagMap = null)
+        {
+            if (tagMap == null)
+            {
+                return GetSortOrderForTag(bloggerTag, _tagMappings);
+            }
+
+            int? result = null;
+            
+            foreach (var map in tagMap)
+            {
+                if (map.BloggerTag.Any(bt => bt == bloggerTag))
+                {
+                    return map.Order;
+                }
+
+                if (map.ChildTags?.Count > 0)
+                {
+                    result = GetSortOrderForTag(bloggerTag, map.ChildTags);
+                }
+
+                if (result != null)
+                {
+                    break;
+                }
+            }
+
+            return result;
         }
 
         private readonly Dictionary<string, string> _postLookup = new Dictionary<string, string>();
