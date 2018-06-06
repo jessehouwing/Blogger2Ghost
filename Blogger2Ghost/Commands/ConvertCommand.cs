@@ -100,8 +100,15 @@ namespace Blogger2Ghost.Commands
                 ).ToArray();
 
             var tagRedirect = _tagMappings.SelectMany(GetRedirectForTagMappingRecursive).Distinct().ToArray();
-                
-            WriteFile("redirects", redirects.Concat(tagRedirect));
+
+            var rssRedirect = new Redirect
+            {
+                From = "/feeds/posts/default",
+                To = "/rss/",
+                Permanent = false
+            };
+
+            WriteFile("redirects", redirects.Concat(tagRedirect).Concat(new []{rssRedirect}));
         }
 
         private IEnumerable<Redirect> GetRedirectForTagMappingRecursive(TagMapping tag)
