@@ -16,7 +16,17 @@ namespace Blogger2Ghost.Ghost
 }
          */
 
-        public string From { get; set; }
+        private string _from;
+        public string From {
+            get { return _from; }
+            set
+            {
+                _from = value;
+                _from = _from.Replace("/", "\\/");
+                _from = _from.Replace(".", "\\.");
+            }
+        }
+
         public string To { get; set; }
         public bool Permanent { get; set; }
 

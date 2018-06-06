@@ -94,12 +94,12 @@ namespace Blogger2Ghost.Commands
                     new Redirect
                     {
                         From = new Uri(url.FromUrl).AbsolutePath,
-                        To = url.ToUrl,
+                        To = "/" + url.ToUrl + "/",
                         Permanent = RedirectPermanent
                     }
                 ).ToArray();
 
-            var tagRedirect = _tagMappings.SelectMany(tag => GetRedirectForTagMappingRecursive(tag)).Distinct().ToArray();
+            var tagRedirect = _tagMappings.SelectMany(GetRedirectForTagMappingRecursive).Distinct().ToArray();
                 
             WriteFile("redirects", redirects.Concat(tagRedirect));
         }
