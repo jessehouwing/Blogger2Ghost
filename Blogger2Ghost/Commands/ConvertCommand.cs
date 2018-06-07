@@ -424,7 +424,7 @@ namespace Blogger2Ghost.Commands
             node.AppendChild(
                 HtmlNode.CreateNode(Environment.NewLine + "```" + Environment.NewLine + Environment.NewLine));
 
-            return string.Join(Environment.NewLine, node.Descendants("#text").Select(child => child.InnerText.Replace("&gt;", ">")));
+            return string.Join(Environment.NewLine, node.Descendants("#text").Select(child => child.InnerText.Replace("&gt;", ">").Replace("&lt;", "<")));
         }
     }
 }
