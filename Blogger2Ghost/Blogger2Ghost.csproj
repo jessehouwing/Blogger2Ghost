@@ -98,7 +98,38 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Blogger2Ghost.csproj.DotSettings" />
     <None Include="packages.config" />
+    <None Include="Theme\assets\built\global.css.map" />
+    <None Include="Theme\assets\built\screen.css.map" />
+    <None Include="Theme\assets\css\csscomb.json" />
+    <None Include="Theme\author.hbs" />
+    <None Include="Theme\custom-blogger.hbs" />
+    <None Include="Theme\default.hbs" />
+    <None Include="Theme\error-404.hbs" />
+    <None Include="Theme\error.hbs" />
+    <None Include="Theme\index.hbs" />
+    <None Include="Theme\LICENSE" />
+    <None Include="Theme\package.json" />
+    <None Include="Theme\page.hbs" />
+    <None Include="Theme\partials\byline-multiple.hbs" />
+    <None Include="Theme\partials\byline-single.hbs" />
+    <None Include="Theme\partials\floating-header.hbs" />
+    <None Include="Theme\partials\icons\avatar.hbs" />
+    <None Include="Theme\partials\icons\facebook.hbs" />
+    <None Include="Theme\partials\icons\ghost-logo.hbs" />
+    <None Include="Theme\partials\icons\infinity.hbs" />
+    <None Include="Theme\partials\icons\location.hbs" />
+    <None Include="Theme\partials\icons\point.hbs" />
+    <None Include="Theme\partials\icons\rss.hbs" />
+    <None Include="Theme\partials\icons\twitter.hbs" />
+    <None Include="Theme\partials\icons\website.hbs" />
+    <None Include="Theme\partials\post-card.hbs" />
+    <None Include="Theme\partials\site-nav.hbs" />
+    <None Include="Theme\post.hbs" />
+    <None Include="Theme\README.md" />
+    <None Include="Theme\tag.hbs" />
+    <None Include="Theme\yarn.lock" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="blog-05-29-2018.xml">
@@ -106,6 +137,15 @@
     </Content>
     <Content Include="Ghost\DataFormat.txt" />
     <Content Include="sample.txt" />
+    <Content Include="Theme\assets\built\global.css" />
+    <Content Include="Theme\assets\built\screen.css" />
+    <Content Include="Theme\assets\css\global.css" />
+    <Content Include="Theme\assets\css\screen.css" />
+    <Content Include="Theme\assets\js\infinitescroll.js" />
+    <Content Include="Theme\assets\js\jquery.fitvids.js" />
+    <Content Include="Theme\assets\screenshot-desktop.jpg" />
+    <Content Include="Theme\assets\screenshot-mobile.jpg" />
+    <Content Include="Theme\gulpfile.js" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
