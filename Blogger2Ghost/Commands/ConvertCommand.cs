@@ -256,7 +256,7 @@ namespace Blogger2Ghost.Commands
                     UpdatedAt = sourcePost.LastUpdated.UtcDateTime,
                     Page = false,
                     Status = isPublished ? PostStatus.Published : PostStatus.Draft,
-                    CustomTemplate = Template,
+                    CustomTemplate = "custom-" + Template,
                     CodeinjectionHead = $"<script>var bloggerUrl=\"{originalUrl}\"</script>"
                 };
 
