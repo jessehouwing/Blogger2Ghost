@@ -99,4 +99,4 @@ To include Google+ comments from your old blog, include:
 </script>
 ```
 
-in your `custom-blogger.hbs` in the comment section. The `bloggerUrl` variable will automatically be added in the post template's `custom
+in your `custom-blogger.hbs` in the comment section. The `bloggerUrl` variable will automatically be added in the post's code injection header section.
