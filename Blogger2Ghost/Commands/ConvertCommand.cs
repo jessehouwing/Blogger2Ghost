@@ -108,7 +108,14 @@ namespace Blogger2Ghost.Commands
                 Permanent = false
             };
 
-            WriteFile("redirects", redirects.Concat(tagRedirect).Concat(new []{rssRedirect}));
+            var dateRedirect = new Redirect
+            {
+                From = @"/\d{4}/?(\d{2}/?)?$",
+                To = "/",
+                Permanent = false
+            };
+
+            WriteFile("redirects", redirects.Concat(tagRedirect).Concat(new []{rssRedirect, dateRedirect}));
         }
 
         private IEnumerable<Redirect> GetRedirectForTagMappingRecursive(TagMapping tag)
