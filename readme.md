@@ -20,6 +20,7 @@ don't know well enough to quickly fix their shortcomings.
  - Retain the Google+ comments
  - Fixes internal links
  - Converts `<pre>` tags to code blocks
+ - Generate eady to import zip file
 
 ## Uses
 
@@ -68,7 +69,7 @@ This project relies on
     Optionally add:
      * Include `--force` to overwrite any existing export files.
      * Include `--template blogger` to assign the `custom-blogger.hbs` template to each post
-     * Include `--zip` to zip up the `.\migration\ghost.json` and all images in `.\migration\images` for import. **This feature is currently bugged on the Ghost end.** To fix, manually create a zip file containing `ghost.json` and the `images` folder using 7zip.
+     * Include `--zip` to zip up the `.\migration\ghost.json` and all images in `.\migration\images` for import.
      * Include `--markdown` to convert your blogger HTML to markdown.
      * Include `--include-drafts` to migrate draft posts as well.
      * Include `--redirect-permanent` to generate 301 type redirects.

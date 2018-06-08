@@ -149,7 +149,7 @@ namespace Blogger2Ghost.Commands
                 foreach (var file in Directory.GetFiles(Path.Combine(Out, "images")))
                 {
                     string filename = Path.GetFileName(file);
-                    zip.CreateEntryFromFile(file, @"images\" + filename);
+                    zip.CreateEntryFromFile(file, @"images/" + filename);
                 }
             }
             Console.WriteLine("Written : " + outputFile);
