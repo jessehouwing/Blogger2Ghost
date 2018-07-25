@@ -277,7 +277,7 @@ namespace Blogger2Ghost.Commands
                     Page = false,
                     Status = isPublished ? PostStatus.Published : PostStatus.Draft,
                     CustomTemplate = "custom-" + Template,
-                    CodeinjectionHead = $"<script>var bloggerUrl=\"{originalUrl}\"</script>"
+                    CodeinjectionHead = $"<script>var bloggerUrl=\"{originalUrl}\";</script>"
                 };
 
                 posts.Add(targetPost);
