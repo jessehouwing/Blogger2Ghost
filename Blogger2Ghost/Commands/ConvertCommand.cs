@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using Blogger2Ghost.Ghost;
 using Blogger2Ghost.Mapping;
@@ -93,7 +94,7 @@ namespace Blogger2Ghost.Commands
                 .Select(url => 
                     new Redirect
                     {
-                        From = new Uri(url.FromUrl).AbsolutePath,
+                        From = "^" + new Uri(url.FromUrl).AbsolutePath + "$",
                         To = "/" + url.ToUrl + "/",
                         Permanent = RedirectPermanent
                     }
@@ -103,14 +104,14 @@ namespace Blogger2Ghost.Commands
 
             var rssRedirect = new Redirect
             {
-                From = "/feeds/posts/default",
+                From = "^/feeds/posts/default$",
                 To = "/rss/",
                 Permanent = false
             };
 
             var dateRedirect = new Redirect
             {
-                From = @"/\d{4}/?(\d{2}/?)?$",
+                From = @"^/\d{4}/?(\d{2}/?)?$",
                 To = "/",
                 Permanent = false
             };
@@ -124,9 +125,21 @@ namespace Blogger2Ghost.Commands
             {
                 yield return new Redirect
                 {
-                    From = "/search/label/" + bloggerTag,
+                    From = "^/search/label/" + Uri.EscapeDataString(bloggerTag) + "$",
                     To = string.IsNullOrWhiteSpace(tag.Slug) ? "/" : "/tag/" + tag.Slug
                 };
+
+                //TODO: Instead of generating two redirects, generate case insensitive regex matcher for `bloggerTag`.
+                string lowercaseBloggerTag = bloggerTag.ToLowerInvariant();
+                if (!bloggerTag.Equals(lowercaseBloggerTag, StringComparison.InvariantCulture))
+                {
+                    yield return new Redirect
+                    {
+                        From = "^/search/label/" + Uri.EscapeDataString(lowercaseBloggerTag) + "$",
+                        To = string.IsNullOrWhiteSpace(tag.Slug) ? "/" : "/tag/" + tag.Slug
+                    };
+                }
+
 
                 if (tag.ChildTags != null && tag.ChildTags.Any())
                 {
