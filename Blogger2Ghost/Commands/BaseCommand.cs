@@ -126,25 +126,12 @@ namespace Blogger2Ghost.Commands
         }
         protected void WriteFile(string name, object data)
         {
-            string path = Path.Combine(Out, name + ".json");
-            Encoding utf8WithoutBom = new UTF8Encoding(false);
-            using (var output = File.Open(path, Overwrite ? FileMode.Create : FileMode.CreateNew, FileAccess.Write))
-            using (var writer = new StreamWriter(output, utf8WithoutBom))
-            {
-                writer.Write(JsonConvert.SerializeObject(data, JsonSerializerSettings));
-                Console.WriteLine("Written : " + path);
-            }
+            FileHelper.WriteFile(Out, name, data, Overwrite);
         }
 
         protected T[] ReadFile<T>(string name)
         {
-            string path = Path.Combine(Out, name + ".json");
-            using (var input = File.Open(path, FileMode.Open, FileAccess.Read))
-            using (var reader = new StreamReader(input, Encoding.UTF8))
-            {
-                Console.WriteLine("Reading : " + path);
-                return JsonConvert.DeserializeObject<T[]>(reader.ReadToEnd(), JsonSerializerSettings);
-            }
+            return FileHelper.ReadFile<T>(Out, name);
         }
 
         private static async Task<List<object>> ParseExport(XmlReader xmlReader)

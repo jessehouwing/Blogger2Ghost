@@ -78,7 +78,10 @@
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\ConvertCommand.cs" />
     <Compile Include="Commands\DownloadImagesCommand.cs" />
+    <Compile Include="FileHelper.cs" />
     <Compile Include="Commands\GenerateMappingsCommand.cs" />
+    <Compile Include="Commands\OptimizeRedirects.cs" />
+    <Compile Include="RedirectHelper.cs" />
     <Compile Include="Ghost\Data.cs" />
     <Compile Include="Ghost\Db.cs" />
     <Compile Include="Ghost\Meta.cs" />

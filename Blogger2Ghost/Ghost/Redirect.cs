@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Blogger2Ghost.Ghost
@@ -22,8 +23,8 @@ namespace Blogger2Ghost.Ghost
             set
             {
                 _from = value;
-                _from = _from.Replace("/", "\\/");
-                _from = _from.Replace(".", "\\.");
+                _from = Regex.Replace(_from, @"(?<!\\)/", @"\/");
+                _from = Regex.Replace(_from, @"(?<!\\)\.", @"\.");
             }
         }
 

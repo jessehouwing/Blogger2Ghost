@@ -23,7 +23,7 @@ namespace Blogger2Ghost.Commands
             HasOption("m|markdown", "Convert to Markdown", _ => Markdown = true);
             HasOption("template=", "Use this custom template", t => Template = t);
             HasOption("z|zip", "Generate zip file", _ => Zip = true);
-            HasOption("redirect-permanent", "", _ => RedirectPermanent = true);
+            HasOption("redirect-permanent", "Generate 301 moved permanently redirects", _ => RedirectPermanent = true);
         }
 
         public bool RedirectPermanent { get; set; }
@@ -94,7 +94,7 @@ namespace Blogger2Ghost.Commands
                 .Select(url => 
                     new Redirect
                     {
-                        From = "^" + new Uri(url.FromUrl).AbsolutePath + "$",
+                        From = RedirectHelper.NormalizeAndMakeCaseInsensitive(new Uri(url.FromUrl).AbsolutePath),
                         To = "/" + url.ToUrl + "/",
                         Permanent = RedirectPermanent
                     }
@@ -116,7 +116,14 @@ namespace Blogger2Ghost.Commands
                 Permanent = false
             };
 
-            WriteFile("redirects", redirects.Concat(tagRedirect).Concat(new []{rssRedirect, dateRedirect}));
+            var indexRedirect = new Redirect
+            {
+                From = @"^/index\.html$",
+                To = "/",
+                Permanent = false
+            };
+
+            WriteFile("redirects", redirects.Concat(tagRedirect).Concat(new []{rssRedirect, dateRedirect, indexRedirect}));
         }
 
         private IEnumerable<Redirect> GetRedirectForTagMappingRecursive(TagMapping tag)
@@ -125,21 +132,9 @@ namespace Blogger2Ghost.Commands
             {
                 yield return new Redirect
                 {
-                    From = "^/search/label/" + Uri.EscapeDataString(bloggerTag) + "$",
+                    From = RedirectHelper.NormalizeAndMakeCaseInsensitive("/search/label/" + bloggerTag),
                     To = string.IsNullOrWhiteSpace(tag.Slug) ? "/" : "/tag/" + tag.Slug
                 };
-
-                //TODO: Instead of generating two redirects, generate case insensitive regex matcher for `bloggerTag`.
-                string lowercaseBloggerTag = bloggerTag.ToLowerInvariant();
-                if (!bloggerTag.Equals(lowercaseBloggerTag, StringComparison.InvariantCulture))
-                {
-                    yield return new Redirect
-                    {
-                        From = "^/search/label/" + Uri.EscapeDataString(lowercaseBloggerTag) + "$",
-                        To = string.IsNullOrWhiteSpace(tag.Slug) ? "/" : "/tag/" + tag.Slug
-                    };
-                }
-
 
                 if (tag.ChildTags != null && tag.ChildTags.Any())
                 {
