@@ -4,6 +4,8 @@ I personally used this project to move my blog from Blogger to Ghost. I tried us
 existing migration tools, but none did everything I wanted and all were written in a language I 
 don't know well enough to quickly fix their shortcomings.
 
+**It will import from Blogger to Ghost v1.0. If you want to migrate to Ghost v2.0 or v30, you'll need to import to a v1.0 instance and then upgrade Ghost to the latest version.**
+
 ## Features
 
  - Use the blogger export feature and don't rely on the public atom/rss feeds.
